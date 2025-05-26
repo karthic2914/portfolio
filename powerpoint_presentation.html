@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Mahadevan S.K - Full Stack Developer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        .presentation-wrapper {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .slide {
+            width: 100%;
+            height: 100vh;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.5s ease-in-out;
+            overflow-y: auto;
+        }
+
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .slide-counter {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+            z-index: 1000;
+        }
+
+        /* Title Slide */
+        .title-slide {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .title-content {
+            max-width: 800px;
+            width: 100%;
+        }
+
+        .profile-photo {
+             width: 145px;
+            height: 180px;
+            border-radius: 20px;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            margin: 0 auto 25px;
+            overflow: hidden;
+            background: #fff;
+        }
+
+        .profile-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 16px;
+        }
+
+        .title-content h1 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .subtitle {
+            font-size: clamp(1.1rem, 3vw, 1.6rem);
+            margin-bottom: 25px;
+            opacity: 0.9;
+        }
+
+        .hero-tagline {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 1.5rem;
+            border-radius: 15px;
+            font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+            line-height: 1.6;
+            margin: 1.5rem 0;
+            backdrop-filter: blur(10px);
+        }
+
+        .contact-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 1.5rem;
+        }
+
+        .contact-item {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.7rem 1.2rem;
+            border-radius: 25px;
+            font-size: clamp(0.8rem, 2vw, 0.95rem);
+            backdrop-filter: blur(8px);
+        }
+
+        /* Content Slides */
+        .content-slide {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: clamp(20px, 5vw, 60px);
+            color: #333;
+        }
+
+        .slide-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .slide-title {
+            font-size: clamp(1.8rem, 4vw, 3rem);
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .slide-subtitle {
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            color: #6c757d;
+            margin-bottom: 20px;
+        }
+
+        .title-underline {
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            margin: 0 auto;
+            border-radius: 2px;
+        }
+
+        /* Skills Section - Improved */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin: 50px 0;
+            max-width: 1400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .skill-card {
+            background: white;
+            padding: 40px 30px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+            transition: all 0.4s ease;
+            border: 1px solid rgba(102, 126, 234, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skill-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+        }
+
+        .skill-card:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 25px 50px rgba(102, 126, 234, 0.15);
+        }
+
+        .skill-icon {
+            font-size: 3.5rem;
+            margin-bottom: 25px;
+            display: block;
+        }
+
+        .skill-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .skill-tag {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 10px 18px;
+            border-radius: 25px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: default;
+        }
+
+        .skill-tag:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .skill-tag.learning {
+            background: linear-gradient(135deg, #6c757d, #5a6268);
+            opacity: 0.8;
+        }
+
+        .skill-tag.learning:hover {
+            opacity: 1;
+            transform: scale(1.05);
+        }
+
+        /* Skill card specific colors */
+        .skill-card:nth-child(1) .skill-icon { color: #667eea; }
+        .skill-card:nth-child(2) .skill-icon { color: #28a745; }
+        .skill-card:nth-child(3) .skill-icon { color: #ffc107; }
+        .skill-card:nth-child(4) .skill-icon { color: #6c757d; }
+
+        /* Experience Section - Enhanced */
+        .experience-timeline {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .experience-item {
+            background: white;
+            padding: 35px;
+            margin: 25px 0;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+            border-left: 6px solid #667eea;
+            transition: all 0.3s ease;
+        }
+
+        .experience-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 50px rgba(102, 126, 234, 0.15);
+        }
+
+        .company-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f8f9fa;
+        }
+
+        .company-logo {
+            width: 70px;
+            height: 70px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            margin-right: 20px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            text-align: center;
+            line-height: 1.2;
+            color: white;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+
+        /* Company-specific logo styles */
+        .company-logo.procurement {
+            background: linear-gradient(135deg, #2E86AB, #A23B72);
+        }
+
+        .company-logo.hcl {
+            background: linear-gradient(135deg, #0066CC, #004499);
+        }
+
+        .company-logo.hexaware {
+            background: linear-gradient(135deg, #FF6B35, #F7931E);
+        }
+
+        .company-logo.zebra {
+            background: linear-gradient(135deg, #000000, #333333);
+        }
+
+        .company-logo.dun {
+            background: linear-gradient(135deg, #1F4E79, #2E5984);
+        }
+
+        .company-info h3 {
+            font-size: 1.8rem;
+            color: #333;
+            margin-bottom: 5px;
+            font-weight: 700;
+        }
+
+        .company-location {
+            color: #667eea;
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .role-info h4 {
+            font-size: 1.4rem;
+            color: #555;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .role-info p {
+            color: #666;
+            font-size: 1.1rem;
+            line-height: 1.7;
+            margin-bottom: 15px;
+        }
+
+        .experience-date {
+            color: #667eea;
+            font-weight: bold;
+            font-size: 1.1rem;
+            background: rgba(102, 126, 234, 0.1);
+            padding: 8px 15px;
+            border-radius: 20px;
+            display: inline-block;
+        }
+
+        /* MudSim Section */
+        .mudsim-section {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .mudsim-hero {
+            background: linear-gradient(135deg, #F1C40F, #F39C12);
+            color: #333;
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        .why-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+        }
+
+        .why-card {
+            padding: 30px;
+            border-radius: 15px;
+            color: white;
+        }
+
+        .why-card.motivation {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+        }
+
+        .why-card.fit {
+            background: linear-gradient(135deg, #28a745, #20c997);
+        }
+
+        .why-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+        }
+
+        .point-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .point-list li {
+            padding: 12px 0;
+            padding-left: 30px;
+            position: relative;
+            font-size: 1.1rem;
+            line-height: 1.5;
+        }
+
+        .point-list li::before {
+            content: '✨';
+            position: absolute;
+            left: 0;
+            font-size: 1.2rem;
+        }
+
+        /* Contributions Section */
+        .contributions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .contribution-card {
+            padding: 30px;
+            border-radius: 15px;
+            color: white;
+        }
+
+        .contribution-card.immediate {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+        }
+
+        .contribution-card.longterm {
+            background: linear-gradient(135deg, #28a745, #20c997);
+        }
+
+        .contribution-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+        }
+
+        .contribution-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .contribution-list li {
+            padding: 12px 0;
+            padding-left: 30px;
+            position: relative;
+            font-size: 1.1rem;
+            line-height: 1.5;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .contribution-list li::before {
+            content: '▶';
+            position: absolute;
+            left: 0;
+            color: #ffd700;
+            font-size: 1.2rem;
+        }
+
+        .cta-section {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
+            padding: 40px;
+            border-radius: 15px;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .cta-section h3 {
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+
+        .cta-section p {
+            font-size: 1.2rem;
+            margin-bottom: 25px;
+        }
+
+        .flag-badges {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .flag-badge {
+            background: rgba(255,255,255,0.2);
+            padding: 12px 20px;
+            border-radius: 25px;
+            font-size: 1rem;
+            backdrop-filter: blur(5px);
+        }
+
+        /* Navigation */
+        .nav-controls {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 15px;
+            z-index: 1000;
+        }
+
+        .nav-btn {
+            padding: 12px 25px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            color: white;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+        }
+
+        .slide-indicators {
+            position: fixed;
+            bottom: 90px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 12px;
+            z-index: 1000;
+        }
+
+        .indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .indicator.active {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            transform: scale(1.5);
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .title-slide {
+                padding: 1rem;
+            }
+            
+            .profile-photo {
+                width: 160px;
+                height: 160px;
+            }
+            
+            .hero-tagline {
+                padding: 1.5rem;
+                margin: 1.5rem 0;
+            }
+            
+            .contact-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+            
+            .content-slide {
+                padding: 30px 20px;
+            }
+            
+            .skills-grid {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                gap: 25px;
+                margin: 30px 0;
+            }
+            
+            .skill-card {
+                padding: 30px 20px;
+            }
+            
+            .skill-icon {
+                font-size: 3rem;
+            }
+            
+            .skill-card h3 {
+                font-size: 1.5rem;
+            }
+            
+            .skill-tags {
+                gap: 8px;
+            }
+            
+            .skill-tag {
+                padding: 8px 14px;
+                font-size: 0.85rem;
+            }
+            
+            .experience-item {
+                padding: 25px 20px;
+                margin: 20px 0;
+            }
+            
+            .company-header {
+                flex-direction: column;
+                text-align: center;
+                margin-bottom: 15px;
+            }
+            
+            .company-logo {
+                margin-right: 0;
+                margin-bottom: 10px;
+                width: 60px;
+                height: 60px;
+            }
+            
+            .company-info h3 {
+                font-size: 1.5rem;
+            }
+            
+            .role-info h4 {
+                font-size: 1.2rem;
+            }
+            
+            .role-info p {
+                font-size: 1rem;
+            }
+            
+            .why-grid,
+            .contributions-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .nav-controls {
+                bottom: 20px;
+            }
+            
+            .slide-indicators {
+                bottom: 70px;
+            }
+            
+            .nav-btn {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .profile-photo {
+                width: 140px;
+                height: 140px;
+            }
+            
+            .hero-tagline {
+                padding: 1.2rem;
+            }
+            
+            .hero-tagline::before {
+                top: -10px;
+                left: 20px;
+                font-size: 1.5rem;
+                padding: 8px;
+            }
+            
+            .content-slide {
+                padding: 20px 15px;
+            }
+            
+            .skill-card {
+                padding: 25px 15px;
+            }
+            
+            .skill-icon {
+                font-size: 2.5rem;
+            }
+            
+            .skill-card h3 {
+                font-size: 1.3rem;
+            }
+            
+            .skills-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .experience-item {
+                padding: 20px 15px;
+            }
+            
+            .company-logo {
+                width: 50px;
+                height: 50px;
+                font-size: 0.8rem;
+            }
+            
+            .company-info h3 {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation-wrapper">
+        <!-- Slide Counter -->
+        <div class="slide-counter">
+            <span id="currentSlide">1</span> / <span id="totalSlides">5</span>
+        </div>
+
+        <!-- Slide 1: Title -->
+        <div class="slide title-slide active" id="slide1">
+            <div class="title-content">
+                <div class="profile-section">
+                    <div class="profile-photo">
+                        <img src="maha.jpg" alt="Mahadevan">
+                    </div>
+                </div>
+                <div class="name-section">
+                    <h1>Mahadevan S.K</h1>
+                    <div class="subtitle">Senior Full Stack Developer</div>
+                </div>
+                <div class="hero-tagline">
+                    18+ years building scalable web applications. Ready to bring innovation to MudSim's cutting-edge simulation platform.
+                </div>
+                <div class="contact-grid">
+                    <div class="contact-item">🇮🇳 From India</div>
+                    <div class="contact-item">🇳🇴 Living in Norway</div>
+                    <div class="contact-item">📞 +47 40975201</div>
+                    <div class="contact-item">📧 karthic2914@gmail.com</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 2: Skills -->
+        <div class="slide content-slide" id="slide2">
+            <div class="slide-header">
+                <h2 class="slide-title">Technical Skills</h2>
+                <div class="slide-subtitle">Technologies and expertise I bring to MudSim</div>
+                <div class="title-underline"></div>
+            </div>
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <div class="skill-icon">💻</div>
+                    <h3>Frontend Development</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">React</span>
+                        <span class="skill-tag">Vue.js</span>
+                        <span class="skill-tag">Angular</span>
+                        <span class="skill-tag">JavaScript</span>
+                        <span class="skill-tag">TypeScript</span>
+                        <span class="skill-tag">HTML5/CSS3</span>
+                    </div>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">⚙️</div>
+                    <h3>Backend Development</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Node.js</span>
+                        <span class="skill-tag">Express.js</span>
+                        <span class="skill-tag">RESTful APIs</span>
+                        <span class="skill-tag">SOAP</span>
+                        <span class="skill-tag">Microservices</span>
+                        <span class="skill-tag">MVC</span>
+                    </div>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">🗄️</div>
+                    <h3>Databases & Cloud</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">MySQL</span>
+                        <span class="skill-tag">PostgreSQL</span>
+                        <span class="skill-tag">MongoDB</span>
+                        <span class="skill-tag">AWS</span>
+                        <span class="skill-tag">Azure</span>
+                        <span class="skill-tag">Docker</span>
+                    </div>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">📚</div>
+                    <h3>Learning & Familiar With</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag learning">C#</span>
+                        <span class="skill-tag learning">.NET</span>
+                        <span class="skill-tag learning">Python</span>
+                    </div>
+                    <div style="margin-top: 15px; font-size: 0.9rem; color: #666; font-style: italic;">
+                        Technologies learned but not used in professional projects
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: Experience -->
+        <div class="slide content-slide" id="slide3">
+            <div class="slide-header">
+                <h2 class="slide-title">Professional Experience</h2>
+                <div class="slide-subtitle">18+ years of building scalable applications</div>
+                <div class="title-underline"></div>
+            </div>
+            <div class="experience-timeline">
+                <div class="experience-item">
+                    <div class="company-header">
+                        <div class="company-logo procurement">PP</div>
+                        <div class="company-info">
+                            <h3>Procurement People</h3>
+                            <div class="company-location">Norway</div>
+                        </div>
+                    </div>
+                    <div class="role-info">
+                        <h4>Lead Frontend Engineer & IT Project Manager</h4>
+                        <p>Leading development and deployment of high-performance, mobile-first web apps using Vue.js, React, Next.js, and Angular. Managing API integration strategy and collaborating in Agile sprints with cross-functional teams.</p>
+                        <div class="experience-date">August 2024 - Present</div>
+                    </div>
+                </div>
+
+                <div class="experience-item">
+                    <div class="company-header">
+                        <div class="company-logo hcl">HCL</div>
+                        <div class="company-info">
+                            <h3>HCL Technologies</h3>
+                            <div class="company-location">Netherlands & India</div>
+                        </div>
+                    </div>
+                    <div class="role-info">
+                        <h4>Senior Technical Lead, IT Project Manager & UX/UI Designer</h4>
+                        <p>Led development of scalable frontend applications using React, Next.js, and Angular. Built component libraries, managed CI/CD pipelines, and coached development teams for enterprise clients including Verizon, Cushman & Wakefield, and DHL.</p>
+                        <div class="experience-date">April 2016 - August 2024 (8+ years)</div>
+                    </div>
+                </div>
+
+                <div class="experience-item">
+                    <div class="company-header">
+                        <div class="company-logo hexaware">HEX</div>
+                        <div class="company-info">
+                            <h3>Hexaware Technologies</h3>
+                            <div class="company-location">Canada, Germany, UK & India</div>
+                        </div>
+                    </div>
+                    <div class="role-info">
+                        <h4>Lead Front End Engineer</h4>
+                        <p>Directed creation of responsive, high-performance web apps using React and TypeScript. Implemented REST/SOAP integrations and optimized CI/CD pipelines for clients including Amadeus, Targo Bank, and PeopleSoft.</p>
+                        <div class="experience-date">March 2011 - April 2016 (5 years)</div>
+                    </div>
+                </div>
+
+                <div class="experience-item">
+                    <div class="company-header">
+                        <div class="company-logo zebra">ZEB</div>
+                        <div class="company-info">
+                            <h3>Zebra Technologies (formerly Reflexis Systems, Inc.)</h3>
+                            <div class="company-location">Global</div>
+                        </div>
+                    </div>
+                    <div class="role-info">
+                        <h4>Senior Front-End Engineer</h4>
+                        <p>Built fast, responsive web UIs for enterprise retail clients including HEB, GAP, AutoZone, and McDonald's. Introduced modular UI architecture reducing interface bugs by 25% and enhanced performance by 40%.</p>
+                        <div class="experience-date">April 2008 - March 2011 (3 years)</div>
+                    </div>
+                </div>
+
+                <div class="experience-item">
+                    <div class="company-header">
+                        <div class="company-logo dun">D&B</div>
+                        <div class="company-info">
+                            <h3>Dun & Bradstreet</h3>
+                            <div class="company-location">Global</div>
+                        </div>
+                    </div>
+                    <div class="role-info">
+                        <h4>Web Developer</h4>
+                        <p>Developed responsive, cross-browser web interfaces using HTML, CSS, JavaScript, and early AJAX. Built dynamic dashboards and reporting tools, optimizing performance and reducing page load times by 35%.</p>
+                        <div class="experience-date">November 2006 - April 2008 (1.5 years)</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: Why MudSim -->
+        <div class="slide content-slide" id="slide4">
+            <div class="slide-header">
+                <h2 class="slide-title">Why MudSim?</h2>
+                <div class="slide-subtitle">Perfect match for cutting-edge simulation platform</div>
+                <div class="title-underline"></div>
+            </div>
+            <div class="mudsim-section">
+                <div class="mudsim-hero">
+                    🚀 MudSim Platform
+                </div>
+                <div class="why-grid">
+                    <div class="why-card motivation">
+                        <h3>Why I Want to Join MudSim</h3>
+                        <ul class="point-list">
+                            <li>Passionate about simulation technology and innovation</li>
+                            <li>18+ years experience perfect for scaling platforms</li>
+                            <li>Ready to contribute to cutting-edge drilling simulation</li>
+                            <li>Excited to work with advanced technical challenges</li>
+                            <li>Want to be part of revolutionary technology</li>
+                        </ul>
+                    </div>
+                    <div class="why-card fit">
+                        <h3>Perfect Fit Because</h3>
+                        <ul class="point-list">
+                            <li>Extensive full-stack development experience</li>
+                            <li>Experience with real-time systems and simulations</li>
+                            <li>Strong background in scalable web applications</li>
+                            <li>Ready to relocate and commit long-term</li>
+                            <li>Proven track record of delivering results</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5: What I Bring -->
+        <div class="slide content-slide" id="slide5">
+            <div class="slide-header">
+                <h2 class="slide-title">What I Bring to MudSim</h2>
+                <div class="slide-subtitle">Immediate impact and long-term value</div>
+                <div class="title-underline"></div>
+            </div>
+            <div class="contributions-grid">
+                <div class="contribution-card immediate">
+                    <h3>Immediate Contributions</h3>
+                    <ul class="contribution-list">
+                        <li>18+ years of proven development experience</li>
+                        <li>Full-stack expertise across multiple technologies</li>
+                        <li>Experience with scalable web applications</li>
+                        <li>Ready to start and make immediate impact</li>
+                        <li>Strong problem-solving and debugging skills</li>
+                        <li>Team leadership and mentoring abilities</li>
+                    </ul>
+                </div>
+                <div class="contribution-card longterm">
+                    <h3>Long-term Value</h3>
+                    <ul class="contribution-list">
+                        <li>Help scale MudSim platform for global reach</li>
+                        <li>Mentor junior developers and build strong team</li>
+                        <li>Bring innovation to simulation technology</li>
+                        <li>Committed to long-term growth with MudSim</li>
+                        <li>Bridge technical expertise with business goals</li>
+                        <li>Drive continuous improvement and optimization</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="cta-section">
+                <h3>Ready to Join MudSim Team!</h3>
+                <p>Let's discuss how I can contribute to MudSim's cutting-edge simulation platform</p>
+                <div class="flag-badges">
+                    <div class="flag-badge">📧 karthic2914@gmail.com</div>
+                    <div class="flag-badge">📱 +47 40975201</div>
+                    <div class="flag-badge">🇳🇴 Available in Norway</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation Controls -->
+        <div class="nav-controls">
+            <button class="nav-btn" id="prevBtn">← Previous</button>
+            <button class="nav-btn" id="nextBtn">Next →</button>
+        </div>
+
+        <!-- Slide Indicators -->
+        <div class="slide-indicators">
+            <div class="indicator active" data-slide="1"></div>
+            <div class="indicator" data-slide="2"></div>
+            <div class="indicator" data-slide="3"></div>
+            <div class="indicator" data-slide="4"></div>
+            <div class="indicator" data-slide="5"></div>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 1;
+        const totalSlides = 5;
+
+        function showSlide(n) {
+            // Remove active class from all slides and indicators
+            document.querySelectorAll('.slide').forEach(slide => {
+                slide.classList.remove('active');
+            });
+            document.querySelectorAll('.indicator').forEach(indicator => {
+                indicator.classList.remove('active');
+            });
+            
+            // Add active class to current slide and indicator
+            document.getElementById(`slide${n}`).classList.add('active');
+            document.querySelector(`[data-slide="${n}"]`).classList.add('active');
+            
+            // Update counter
+            document.getElementById('currentSlide').textContent = n;
+            currentSlide = n;
+        }
+
+        function nextSlide() {
+            if (currentSlide < totalSlides) {
+                showSlide(currentSlide + 1);
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 1) {
+                showSlide(currentSlide - 1);
+            }
+        }
+
+        // Event listeners
+        document.getElementById('nextBtn').addEventListener('click', nextSlide);
+        document.getElementById('prevBtn').addEventListener('click', prevSlide);
+
+        // Indicator clicks
+        document.querySelectorAll('.indicator').forEach((indicator, index) => {
+            indicator.addEventListener('click', () => {
+                showSlide(index + 1);
+            });
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') nextSlide();
+            if (e.key === 'ArrowLeft') prevSlide();
+        });
+
+        // Touch support
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        document.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+
+        document.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            const swipeThreshold = 50;
+            
+            if (touchEndX < touchStartX - swipeThreshold) {
+                nextSlide();
+            }
+            if (touchEndX > touchStartX + swipeThreshold) {
+                prevSlide();
+            }
+        });
+
+        // Initialize first slide
+        document.addEventListener('DOMContentLoaded', () => {
+            showSlide(1);
+        });
+    </script>
+</body>
+</html>
